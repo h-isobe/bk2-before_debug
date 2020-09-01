@@ -1,0 +1,20 @@
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+
+    <% if @book.errors.any? %>
+    <%= @book.errors.count %>errors
+    <% @book.errors.full_messages.each do |message| %>
+      <%= message %>
+    <% end %>
+  <% end %>
+
+		<h1>Editing Book</h1>
+
+		<%= render "books/newform", book: @book %>
+		<%= link_to "Show", book_path(@book), class: "book_#{@book.id}" %>
+		<%= link_to "Back", books_path, class: "back" %>
+
+	</div>
+	<div class="col-md-3"></div>
+
+</div>
