@@ -3,8 +3,12 @@ Rails.application.routes.draw do
   get 'home/about'
   devise_for :users
   resources :users,only: [:show,:index,:edit,:update]
+  get 'follower/:id' => 'users#follower', as:'follower'
+  get 'followed/:id' => 'users#followed', as:'followed'
   resources :books do
     resource :favorites, only: [:create, :destroy]
     resources :book_comments, only: [:create, :destroy]
   end
+  post 'follow/:id' => 'relationships#follow', as:'follow'
+  post 'unfollow/:id' => 'relationships#unfollow', as:'unfollow'
 end
