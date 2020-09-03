@@ -25,12 +25,12 @@
 </table>
 
 <% unless user == current_user %>
-						  <% if current_user.following?(user) %>
-							  <td><%= link_to "フォロー外す", unfollow_path(user.id), method: :post, class:"btn btn-primary active" %></td>
-							<% elsif %>
-							  <td><%= link_to "フォローする", follow_path(user.id), method: :post, class:"btn btn-success active" %></td>
-							<% end %>
-						<% end %>
+	<% if current_user.following?(user) %>
+		<td><%= link_to "フォロー外す", unfollow_path(user.id), method: :post, class:"btn btn-primary active" %></td>
+	<% elsif %>
+		 <td><%= link_to "フォローする", follow_path(user.id), method: :post, class:"btn btn-success active" %></td>
+	<% end %>
+<% end %>
 
 <div class="row">
   <% if user == current_user %>

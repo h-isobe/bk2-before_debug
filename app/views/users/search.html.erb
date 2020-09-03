@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xs-4">
+    <div class="search-box">
+      <%= form_tag(search_path, :method => 'get') do %>
+		    <%= text_field_tag :search %>
+	      <%= select_tag(:option, options_for_select([["User", "1"],["Book", "2"]])) %>
+		    <%= select_tag(:choice, options_for_select([["完全一致", "1"],["前方一致", "2"],["後方一致", "3"],["部分一致", "4"]])) %>
+		    <%= submit_tag '検索' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if @user_or_book == "1" %>
+  <h1>Users search</h1>
+  <table class="table">
+    <thead>
+      <th></th>
+      <th>Name</th>
+      <th>Introduction</th>
+    </thead>
+    <% @users.each do |user| %>
+    <tbody>
+      <td><%= attachment_image_tag user, :profile_image, :fill, 10, 10, fallback: "no-image-mini.jpg" %></td>
+      <td><%= user.name %></td>
+      <td><%= user.introduction %></td>
+    </tbody>
+    <% end %>
+  </table>
+<% elsif @user_or_book == "2" %>
+  <h1>Books search</h1>
+  <table class="table">
+    <thead>
+      <th></th>
+      <th>Title</th>
+      <th>Opinion</th>
+    </thead>
+    <% @books.each do |book| %>
+    <tbody>
+      <td><%= attachment_image_tag book.user, :profile_image, :fill, 10, 10, fallback: "no-image-mini.jpg" %></td>
+      <td><%= book.title %></td>
+      <td><%= book.body %></td>
+    </tbody>
+    <% end %>
+  </table>
+<% end %>

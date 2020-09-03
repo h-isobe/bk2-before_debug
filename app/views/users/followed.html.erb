@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @user.follower_user.each do |user| %>
+    <% @user.follower_user.each do |user| %> <!--ユーザーがフォローしているユーザーのみを繰り返し表示 -->
   <tr>
       <td><%= attachment_image_tag user, :profile_image, :fill, 10, 10, fallback: "no-image-mini.jpg" %></td>
       <td><%= user.name %></td>
