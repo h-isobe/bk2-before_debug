@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   post 'unfollow/:id' => 'relationships#unfollow', as:'unfollow'
 
   get 'search' => 'users#search'
+  get 'maps/show'
+  resources :maps, only: [:show]
 end
