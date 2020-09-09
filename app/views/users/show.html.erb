@@ -46,18 +46,10 @@
 	</div>
 </div>
 
-<% if @user.id == current_user.id %>
-<div class="row">
-  <div class="col-xs-12">
-	  <h2>Your MAP</h2>
-
-<input id="address" type="textbox" >
-
-<!-- buttonをクリックしたらcodeAddressを実行　-->
-<input type="button" value="Encode" onclick="codeAddress()">
-<div id='map'></div>
-
-
+<% if @user == current_user %>
+  <h2>Your MAP</h2>
+  <div id='map' class="<%= @user.prefecture_code + @user.city + @user.street %>"></div>
+<% end %>
 <style>
 #map{
   height: 400px;
@@ -76,19 +68,7 @@ let geocoder
 function initMap(){
   // geocoderを初期化
   geocoder = new google.maps.Geocoder()
-
-  map = new google.maps.Map(document.getElementById('map'), {
-  center: {lat: -34.397, lng: 150.644},
-  zoom: 8
-  });
-}
-
-function codeAddress(){
-  // 入力を取得
-  let inputAddress = document.getElementById('address').value;
-
-  // geocodingしたあとmapを移動
-  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+  geocoder.geocode( { 'address': $('#map').attr('class')}, function(results, status) {
     if (status == 'OK') {
 　　　　　　　　　　　　// map.setCenterで地図が移動
       map.setCenter(results[0].geometry.location);
@@ -102,10 +82,18 @@ function codeAddress(){
       alert('Geocode was not successful for the following reason: ' + status);
     }
   });
+
+  map = new google.maps.Map(document.getElementById('map'), {
+  center: {lat: -34.397, lng: 150.644},
+  zoom: 8
+  });
+}
+
+function codeAddress(){
+  // 入力を取得
+  let inputAddress = document.getElementById('address').value;
+
+  // geocodingしたあとmapを移動
 }
 </script>
-
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['SECRET_KEY'] %>&callback=initMap" async defer></script>
-	</div>
-</div>
-<% end %>
