@@ -1,0 +1,26 @@
+<h1>DM</h1>
+
+<h4>参加者</h4> <!--下記でコントローラで定義した変数を使う-->
+<% @entries.each do |e| %> <!--roomに入室している2人のユーザー情報をeachで表示-->
+  <h5><strong><a href="/users/<%= e.user.id %>"><%= e.user.email%>さん</a></strong></h5>
+<% end %>
+
+<hr>
+<% if @messages.present? %> <!--もしチャットルームでメッセージが存在していれば-->
+  <% @messages.each do |m| %> <!--メッセージや紐づいたユーザー情報を表示-->
+    <strong><%= m.content %></strong>
+    <small>by <strong><a href="/users/<%= m.user_id %>"><%= m.user.email %>さん</a></strong></small>
+    <hr>
+  <% end %>
+<% else %> <!--そうでなくメッセージがなければ-->
+  <h3 class="text-center">メッセージはまだありません</h3>
+<% end %>
+
+<%= form_for @message do |f| %> <!--新しいメッセージ作成-->
+  <%= f.text_field :content, :placeholder => "メッセージを入力して下さい" , :size => 70 %> 
+  <%= f.hidden_field :room_id, :value => @room.id %> <!--どのチャットルームのidかを特定するためにroom_idを隠して渡す-->
+  <br>
+  <%= f.submit "投稿する" %> <!--メッセージコントローラにパラメータを送る-->
+<% end %>
+
+<%= link_to "ユーザー一覧に戻る", users_path %>

@@ -37,3 +37,22 @@
 	<%= link_to '', edit_user_path(user), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{user.id}" %>
 	<% end %>
 </div>
+
+<h1>ユーザー詳細</h1>
+
+<h2><%= user.email %></h2>
+
+<% if user.id == current_user.id %> <!--もしユーザーが同じなら-->
+
+<% else %> <!--そうでなく異なれば-->
+  <% if @isRoom == true %> <!--もしチャットボタンがあれば-->
+    <p><a href="/rooms/<%= @roomId %>">chatを始める</a>
+  <% else %> <!--そうでなくまだチャットがなければ-->
+    <%= form_for @room do |f| %> <!--@roomをコントローラにパラメータを送る-->
+      <%= fields_for @entry do |e| %> <!--子モデルの@entryをコントローラにパラメータを送る-->
+        <%= e.hidden_field :user_id, :value=> user.id %> <!--ユーザのidもフォームで入力させず送る-->
+      <% end %>
+      <%= f.submit "チャットを始める" %> <!--これでroomsテーブルに保存される-->
+    <% end %>
+  <% end %>
+<% end %>

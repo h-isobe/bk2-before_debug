@@ -18,4 +18,6 @@ Rails.application.routes.draw do
   get 'search' => 'users#search'
   get 'maps/show'
   resources :maps, only: [:show]
+  resources :messages, :only => [:create]
+  resources :rooms, :only => [:create, :show, :index]
 end

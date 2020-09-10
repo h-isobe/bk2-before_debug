@@ -3,9 +3,27 @@ class UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:edit, :update]
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]) #例）id:2のshowページとする。
     @books = @user.books
     @book = Book.new
+    @currentUserEntry=Entry.where(user_id: current_user.id) #Entryモデルのuser_idに紐づくログインユーザーのidを取得。id:1とする。
+    @userEntry=Entry.where(user_id: @user.id) #Entryモデルのuser_idと紐づく1行目の@userのidを取得。id:2とする。
+    if @user.id == current_user.id #もしユーザーが同じなら何も起こらない。
+    else #そうでなく異なれば
+      @currentUserEntry.each do |cu| #各ログインユーザーを1人ずつ取り出す
+        @userEntry.each do |u| #各相手側のユーザーを取り出す
+          if cu.room_id == u.room_id then #もし紐づくroom_idが同じroom_idであれば
+            @isRoom = true #チャット部屋がある
+            @roomId = cu.room_id #ログインユーザーは@userのチャット部屋に入室できる
+          end
+        end
+      end
+      if @isRoom #もし2人のチャット部屋あれば
+      else #そうでなくなければ
+        @room = Room.new #新しく部屋を作る
+        @entry = Entry.new #新しく@userの入室前の部屋を作る
+      end
+    end
   end
 
   def index
