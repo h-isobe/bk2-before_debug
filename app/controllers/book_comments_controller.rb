@@ -5,6 +5,8 @@ class BookCommentsController < ApplicationController
     @comment = current_user.book_comments.new(book_comment_params)
     @comment.book_id = @book.id
     unless @comment.save
+      @book=@comment.micropost
+      @book.create_notification_comment!(current_user, @comment.id)
       @new_book = Book.new
       @user = current_user
       render "books/show"

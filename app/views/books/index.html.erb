@@ -9,7 +9,7 @@
 
 	</div>
 
-	<div class="col-xs-9">
+	<div class="col-xs-6">
 		<h2>Books index</h2>
 		<!--books一覧 -->
 		<table class="table table-hover table-inverse">
@@ -44,5 +44,25 @@
 		<!--books一覧 -->
 
 
+	</div>
+
+	<div class="col-xs-3">
+	  <h3>人気投稿ランキング</h3>
+		<table class="table table-hover table-inverse">
+		  <thead>
+			  <tr>
+				  <th>タイトル</th>
+				</tr>
+			</thead>
+		<% @all_ranks.each.with_index(1) do |rank, i| %>
+			<tbody>
+			  <tr>
+				  <td>
+		        第<%= i %>位
+		        <%= rank.title %>
+					</td>
+				</tr>
+			</tbody>
+		<% end %>
 	</div>
 </div>

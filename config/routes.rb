@@ -20,4 +20,5 @@ Rails.application.routes.draw do
   resources :maps, only: [:show]
   resources :messages, :only => [:create]
   resources :rooms, :only => [:create, :show, :index]
+  resources :notifications, only: [:index, :destroy]
 end

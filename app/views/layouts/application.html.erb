@@ -23,6 +23,12 @@
               <li><%= link_to ' home', user_path(current_user), class: 'glyphicon glyphicon-home home' %></li>
               <li><%= link_to ' users', users_path, class: 'glyphicon glyphicon-user users' %></li>
               <li><%= link_to ' books', books_path, class: 'glyphicon glyphicon-book books' %></li>
+              <% if unchecked_notifications.any? %>
+                <i class="fa fa-circle" style="color: gold;"></i>
+              <% end %>
+              <li>
+              <%= link_to 'notices', notifications_path, class: 'glyphicon glyphicon-notice notices' %>
+              </li>
               <li><%= link_to ' logout', destroy_user_session_path, method: :delete, class: 'glyphicon glyphicon-log-out logout' %></li>
             <% else %>
               <li><%= link_to ' home', root_path, class: 'glyphicon glyphicon-home home' %></li>
