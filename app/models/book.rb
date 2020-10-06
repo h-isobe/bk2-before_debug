@@ -3,10 +3,13 @@ class Book < ApplicationRecord
 	has_many :favorites, dependent: :destroy
 	has_many :book_comments, dependent: :destroy
 	has_many :notifications, dependent: :destroy
+	has_many :book_images, dependent: :destroy
+  accepts_attachments_for :book_images, attachment: :image
 	#バリデーションは該当するモデルに設定する。エラーにする条件を設定できる。
 	#presence trueは空欄の場合を意味する。
 	validates :title, presence: true
 	validates :body, presence: true, length: {maximum: 200}
+	is_impressionable
 
 	def favorited_by?(user)
 		favorites.where(user_id: user.id).exists?

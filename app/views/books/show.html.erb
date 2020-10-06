@@ -21,8 +21,23 @@
 						<%= @book.user.name %>
 						<% end %>
 					</td>
-					<td><%= link_to @book.title, book_path(@book) %></td>
+					<td><%= @book.title %></td>
+					<td>
+					  <% if @book.user == current_user %>
+						  <span class="pv"><%= "閲覧数：#{@book.impressionist_count}" %>
+						  </span>
+					  <% end %>
+					</td>
 					<td><%= @book.body %></td>
+					<td>
+					  <% if @book.book_images.present? %>
+              <% @book.book_images.each do |image| %>
+                <%= attachment_image_tag image, :image, :fill, 100, 100 %>
+              <% end %>
+            <% else %>
+             <%= image_tag 'no_image.jpg', size: '200x200' %>
+            <% end %>
+					</td>
 					<td id="favorites_buttons_<%= @book.id %>">
             <%= render partial: 'favorites/favorite', locals: { book: @book} %>
           </td>
